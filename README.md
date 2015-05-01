@@ -32,6 +32,16 @@ Start with a **demo Consul backend** using [demo.consul.io](https://demo.consul.
       --volume $PWD/config:/config \
       sjourdan/vault -config=/config/demo.hcl
 
+If you have a running Consul container named `consul`, you can just use it:
+
+    $ docker run -t -i \
+      --cap-add IPC_LOCK \
+      -p 8200:8200 \
+      --hostname vault \
+      --name vault \
+      --link consul:consul \
+      --volume $PWD/config:/config \
+      sjourdan/vault -config=/config/consul.hcl
 
 To initialize Vault, on your workstation with `vault` installed:
 
