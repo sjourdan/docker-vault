@@ -6,6 +6,10 @@ Vault uses TCP/8200 by default, so we'll keep that. The demo configuration is li
 
 Configuration is stored under `config/`.
 
+The automated latest build is always available at [sjourdan/vault](https://registry.hub.docker.com/u/sjourdan/vault/):
+
+    $ docker pull sjourdan/vault
+
 ## Vault Server
 
 As per [Issue 59](https://github.com/hashicorp/vault/issues/59), need to add `--cap-add IPC_LOCK` option.
