@@ -14,24 +14,36 @@ The automated latest build is always available at [sjourdan/vault](https://regis
 
 As per [Issue 59](https://github.com/hashicorp/vault/issues/59), need to add `--cap-add IPC_LOCK` option.
 
-Start by default in dev mode:
+Start by default in **dev mode**:
 
-    $ docker run -t -i --cap-add IPC_LOCK -p 8200:8200 --hostname vault --name vault sjourdan/vault
+    $ docker run -t -i \
+      --cap-add IPC_LOCK \
+      -p 8200:8200 \
+      --hostname vault \
+      --name vault sjourdan/vault
 
-Start with a demo cluster on demo.consul.io:
+Start with a **demo Consul backend** using [demo.consul.io](https://demo.consul.io):
 
-    $ docker run -t -i --cap-add IPC_LOCK -p 8200:8200 --hostname vault --name vault --volume $PWD/config:/config sjourdan/vault -config=/config/demo.hcl
+    $ docker run -t -i \
+      --cap-add IPC_LOCK \
+      -p 8200:8200 \
+      --hostname vault \
+      --name vault \
+      --volume $PWD/config:/config \
+      sjourdan/vault -config=/config/demo.hcl
+
 
 To initialize Vault, on your workstation with `vault` installed:
 
     $ export VAULT_ADDR='http://a.b.c.d:8200'
     $ vault init
 
-Then RTFM for Vault usage.
+Then [RTFM](https://vaultproject.io/intro/getting-started/first-secret.html) for Vault usage.
 
 ## Consul
 
-We'll use Progrium's Consul Docker box, it's working great.
+I'm using Progrium's Consul Docker box, it's working great.
+Here's with the WebUI:
 
     $ docker run -p 8400:8400 -p 8500:8500 -p 8600:53/udp --hostname consul --name consul progrium/consul -server -bootstrap -ui-dir /ui
 
