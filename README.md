@@ -12,20 +12,16 @@ The automated latest build is always available at [sjourdan/vault](https://regis
 
 ## Vault Server
 
-As per [Issue 59](https://github.com/hashicorp/vault/issues/59), need to add `--cap-add IPC_LOCK` option.
-
 Start by default in **dev mode**:
 
-    $ docker run -t -i \
-      --cap-add IPC_LOCK \
+    $ docker run -it \
       -p 8200:8200 \
       --hostname vault \
       --name vault sjourdan/vault
 
 Start with a **demo Consul backend** using [demo.consul.io](https://demo.consul.io):
 
-    $ docker run -t -i \
-      --cap-add IPC_LOCK \
+    $ docker run -it \
       -p 8200:8200 \
       --hostname vault \
       --name vault \
@@ -34,8 +30,7 @@ Start with a **demo Consul backend** using [demo.consul.io](https://demo.consul.
 
 If you have a running Consul container named `consul`, you can just use it:
 
-    $ docker run -t -i \
-      --cap-add IPC_LOCK \
+    $ docker run -it \
       -p 8200:8200 \
       --hostname vault \
       --name vault \
