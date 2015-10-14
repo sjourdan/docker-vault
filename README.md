@@ -26,7 +26,7 @@ Start with a **demo Consul backend** using [demo.consul.io](https://demo.consul.
       --hostname vault \
       --name vault \
       --volume $PWD/config:/config \
-      sjourdan/vault -config=/config/demo.hcl
+      sjourdan/vault server -config=/config/demo.hcl
 
 If you have a running Consul container named `consul`, you can just use it:
 
@@ -36,7 +36,7 @@ If you have a running Consul container named `consul`, you can just use it:
       --name vault \
       --link consul:consul \
       --volume $PWD/config:/config \
-      sjourdan/vault -config=/config/consul.hcl
+      sjourdan/vault server -config=/config/consul.hcl
 
 To initialize Vault, on your workstation with `vault` installed:
 
@@ -53,3 +53,10 @@ Here's with the WebUI:
     $ docker run -p 8400:8400 -p 8500:8500 -p 8600:53/udp --hostname consul --name consul progrium/consul -server -bootstrap -ui-dir /ui
 
 The [WebGUI](http://a.b.c.d:8500/) should be available.
+
+## Vault Client
+
+You can use it as a `vault` client too:
+
+    $ alias vault="docker run vault"
+    $ vault version
