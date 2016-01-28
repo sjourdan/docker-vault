@@ -12,12 +12,18 @@ The automated latest build is always available at [sjourdan/vault](https://regis
 
 ## Vault Server
 
+### Dev mode
+
 Start by default in **dev mode**:
 
     $ docker run -it \
       -p 8200:8200 \
       --hostname vault \
       --name vault sjourdan/vault
+
+(note that if you're in **dev mode** using docker-machine or similar, the `vault` daemon will listen only on 127.0.0.1 ; it won't be available directly from your workstation)
+
+### Using the Demo Consul Backend
 
 Start with a **demo Consul backend** using [demo.consul.io](https://demo.consul.io):
 
@@ -27,6 +33,8 @@ Start with a **demo Consul backend** using [demo.consul.io](https://demo.consul.
       --name vault \
       --volume $PWD/config:/config \
       sjourdan/vault server -config=/config/demo.hcl
+
+### Using your own Consul backend
 
 If you have a running Consul container named `consul`, you can just use it:
 
@@ -38,10 +46,24 @@ If you have a running Consul container named `consul`, you can just use it:
       --volume $PWD/config:/config \
       sjourdan/vault server -config=/config/consul.hcl
 
-To initialize Vault, on your workstation with `vault` installed:
+## Using Vault
+
+To initialize Vault, on your workstation with `vault` installed (remember, in _dev mode_ it won't work as the daemon listens only on 127.0.0.1, see below for more):
 
     $ export VAULT_ADDR='http://a.b.c.d:8200'
     $ vault init
+
+### Using docker-machine
+
+If you happen to run docker from inside a VM (ie.: docker-machine with VirtualBox or VMware etc.), you can still use the **dev mode** by launching a shell from inside the container:
+
+```
+$ docker exec -t -i vault /bin/sh
+# vault version
+Vault v0.4.1
+# vault --help
+[...]
+```
 
 Then [RTFM](https://vaultproject.io/intro/getting-started/first-secret.html) for Vault usage.
 
