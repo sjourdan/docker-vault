@@ -69,7 +69,7 @@ Then [RTFM](https://vaultproject.io/intro/getting-started/first-secret.html) for
 
 ## Consul
 
-I'm using Progrium's Consul Docker box, it's working great.
+I'm using [Progrium's Consul Docker box](https://github.com/gliderlabs/docker-consul), it's working great.
 Here's with the WebUI:
 
     $ docker run -p 8400:8400 -p 8500:8500 -p 8600:53/udp --hostname consul --name consul progrium/consul -server -bootstrap -ui-dir /ui
