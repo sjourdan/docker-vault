@@ -80,5 +80,5 @@ The [WebGUI](http://a.b.c.d:8500/) should be available.
 
 You can use it as a `vault` client too:
 
-    $ alias vault="docker run vault"
+    $ alias vault="docker run --rm -e "VAULT_ADDR=$VAULT_ADDR" sjourdan/vault"
     $ vault version
