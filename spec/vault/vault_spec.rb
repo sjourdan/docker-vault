@@ -9,10 +9,10 @@ describe "Vault" do
   set :docker_image, image.id
 
   it "installs the right version of Vault" do
-    expect(terraform_version).to include("0.5.0")
+    expect(vault_version).to include("0.5.0")
   end
 
-  def terraform_version
+  def vault_version
     command("/bin/vault version").stdout
   end
 
