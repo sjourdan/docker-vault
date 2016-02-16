@@ -1,5 +1,7 @@
 # Docker Vault
 
+[![Build Status](https://travis-ci.org/sjourdan/docker-vault.svg?branch=master)](https://travis-ci.org/sjourdan/docker-vault)
+
 This Docker Vault container is using [Busybox](https://registry.hub.docker.com/u/progrium/busybox/) and [Hashicorp's Vault](https://vaultproject.io/).
 
 Vault uses TCP/8200 by default, so we'll keep that. The demo configuration is listening on all interfaces (not just localhost), and using demo.consul.io as per the [getting started docs](https://vaultproject.io/intro/getting-started/deploy.html).
