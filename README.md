@@ -1,7 +1,6 @@
 # Docker Vault
 
 [![Build Status](https://travis-ci.org/sjourdan/docker-vault.svg?branch=master)](https://travis-ci.org/sjourdan/docker-vault)
-[![Codeship Status](https://codeship.com/projects/134543/status?branch=master)](https://codeship.com/projects/134543/status?branch=master)
 
 This Docker Vault container is using [Busybox](https://registry.hub.docker.com/u/progrium/busybox/) and [Hashicorp's Vault](https://vaultproject.io/).
 
