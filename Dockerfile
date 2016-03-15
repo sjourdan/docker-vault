@@ -1,7 +1,7 @@
 FROM progrium/busybox
 MAINTAINER Stephane Jourdan <fasten@fastmail.fm>
-ENV REFRESHED_AT 2016-02-16
-ENV VAULT_VERSION 0.5.0
+ENV REFRESHED_AT 2016-03-15
+ENV VAULT_VERSION 0.5.1
 ENV VAULT_TMP_FILE /tmp/vault.zip
 
 # x509 expects certs to be in this file only.
