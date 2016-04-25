@@ -5,4 +5,4 @@ services:
 
 script:
   - make build
-  - docker run sjourdan/vault version | grep "v$(cat Dockerfile | grep 'ENV VAULT_VERSION' | cut -f3 -d' ')"
+  - docker run dennybaa/vault version | grep "v$(cat Dockerfile | grep 'ENV VAULT_VERSION' | cut -f3 -d' ')"

@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-CONTAINER_NAME=sjourdan/vault
+CONTAINER_NAME=dennybaa/vault
 
 all: build
 build:	## Build the container
