@@ -2,85 +2,88 @@
 
 [![Build Status](https://travis-ci.org/sjourdan/docker-vault.svg?branch=master)](https://travis-ci.org/sjourdan/docker-vault)
 
-This Docker Vault container is using [Busybox](https://registry.hub.docker.com/u/progrium/busybox/) and [Hashicorp's Vault](https://vaultproject.io/).
+This Docker Vault container is using [Alpine Linux](https://hub.docker.com/_/alpine/) minimal image and [Hashicorp's Vault](https://vaultproject.io/).
 
 Vault uses TCP/8200 by default, so we'll keep that. The demo configuration is listening on all interfaces (not just localhost), and using demo.consul.io as per the [getting started docs](https://vaultproject.io/intro/getting-started/deploy.html).
 
-Configuration is stored under `config/`.
+Configuration examples are stored under `config/` in the git working directory.
 
 The automated latest build is always available at [sjourdan/vault](https://registry.hub.docker.com/u/sjourdan/vault/):
 
-    $ docker pull sjourdan/vault
+`docker pull sjourdan/vault`
 
 ## Vault Server
 
 ### Dev mode
 
-Start by default in **dev mode**:
+Start vault server in a **dev mode**:
 
-    $ docker run -it \
+```
+docker run -it \
       -p 8200:8200 \
       --hostname vault \
       --name vault sjourdan/vault
-
-(note that if you're in **dev mode** using docker-machine or similar, the `vault` daemon will listen only on 127.0.0.1 ; it won't be available directly from your workstation)
+```
 
 ### Using the Demo Consul Backend
 
 Start with a **demo Consul backend** using [demo.consul.io](https://demo.consul.io):
 
-    $ docker run -it \
+```
+docker run -it \
       -p 8200:8200 \
       --hostname vault \
       --name vault \
       --volume $PWD/config:/config \
       sjourdan/vault server -config=/config/demo.hcl
+```
 
 ### Using your own Consul backend
 
-If you have a running Consul container named `consul`, you can just use it:
+### Consul
 
-    $ docker run -it \
+For this purpose you can use [Progrium's Consul Docker box](https://github.com/gliderlabs/docker-consul) container, it's working great. If you have a running Consul container named `consul` you can skip the step bellow:
+
+```
+# Starting consul container with web ui on port 8500
+docker run -p 8400:8400 -p 8500:8500 -p 8600:53/udp --hostname consul --name consul progrium/consul -server -bootstrap -ui-dir /ui
+```
+
+When your consul service is started and accessible via links or DNS as consul, you can just start vault server using the following command:
+
+```
+docker run -it \
       -p 8200:8200 \
       --hostname vault \
       --name vault \
       --link consul:consul \
       --volume $PWD/config:/config \
       sjourdan/vault server -config=/config/consul.hcl
+```
 
 ## Using Vault
 
-To initialize Vault, on your workstation with `vault` installed (remember, in _dev mode_ it won't work as the daemon listens only on 127.0.0.1, see below for more):
-
-    $ export VAULT_ADDR='http://a.b.c.d:8200'
-    $ vault init
-
-### Using docker-machine
-
-If you happen to run docker from inside a VM (ie.: docker-machine with VirtualBox or VMware etc.), you can still use the **dev mode** by launching a shell from inside the container:
+To initialize Vault, on your workstation with `vault` installed, first we need to export vault ip address. If you bootstrapped containers on your machine you can use  `docker inspect -f '{{ .NetworkSettings.IPAddress }}' vault` command to get the vault container internal ip address.
 
 ```
-$ docker exec -t -i vault /bin/sh
-# vault version
-Vault v0.4.1
-# vault --help
-[...]
+# The address must start with protocol specifier!
+export VAULT_ADDR='http://a.b.c.d:8200'
 ```
 
-Then [RTFM](https://vaultproject.io/intro/getting-started/first-secret.html) for Vault usage.
+And refer to [vault documentation](https://www.vaultproject.io/docs/index.html) on how to initialize and unseal data store. In case if you are evaluating in **dev mode** of vault server, the empty initialized and unsealed **inmem** vault data store will be automatically created.
 
-## Consul
+You can simply export the root token printed on vault server startup as `export VAULT_TOKEN=PASTE_YOUR_TOKEN_HERE`.
 
-I'm using [Progrium's Consul Docker box](https://github.com/gliderlabs/docker-consul), it's working great.
-Here's with the WebUI:
+To use a vault client from a container you can create a wrapper function like bellow:
 
-    $ docker run -p 8400:8400 -p 8500:8500 -p 8600:53/udp --hostname consul --name consul progrium/consul -server -bootstrap -ui-dir /ui
+```
+vault () { docker run -it --rm -e VAULT_ADDR --entrypoint=/bin/sh sjourdan/vault -c "vault auth $VAULT_TOKEN &>/dev/null; vault $*" }
+```
 
-The [WebGUI](http://a.b.c.d:8500/) should be available.
+The above invocation method of course could directly path-through `$VAULT_TOKEN` using docker `-e` option, however we don't want to re-define this environment variable, so we emulate auth session and only after pass arguments to vault.
 
-## Vault Client
+Also you can use alias, but this overrides `$VAULT_TOKEN` and **is not recommend**, since it affects vault client default usage scenario.
 
-You can use it as a `vault` client too:
-
-    $ alias vault="docker run --rm -e "VAULT_ADDR=$VAULT_ADDR" sjourdan/vault"
-    $ vault version
+```
+alias vault="docker run --rm -e VAULT_ADDR -e VAULT_TOKEN sjourdan/vault"
+```
