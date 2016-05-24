@@ -1,6 +1,6 @@
 # Docker Vault
 
-[![Build Status](https://travis-ci.org/sjourdan/docker-vault.svg?branch=master)](https://travis-ci.org/sjourdan/docker-vault)
+[![Circle CI](https://circleci.com/gh/sjourdan/docker-vault.svg?style=shield)](https://circleci.com/gh/sjourdan/docker-vault)
 
 This Docker Vault container is using [Alpine Linux](https://hub.docker.com/_/alpine/) minimal image and [Hashicorp's Vault](https://vaultproject.io/).
 
