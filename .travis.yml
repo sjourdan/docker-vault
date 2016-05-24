@@ -3,8 +3,6 @@ sudo: false
 services:
   - docker
 
-before_install:
-  - docker build -t sjourdan/vault .
-
 script:
-  - bundle exec rspec
+  - make build
+  - docker run sjourdan/vault version | grep "v$(cat Dockerfile | grep 'ENV VAULT_VERSION' | cut -f3 -d' ')"
