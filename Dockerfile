@@ -1,10 +1,10 @@
 FROM alpine:latest
 MAINTAINER Stephane Jourdan <fasten@fastmail.fm>
-ENV REFRESHED_AT 2016-04-25
-ENV VAULT_VERSION 0.5.2
+ENV REFRESHED_AT 2016-06-13
+ENV VAULT_VERSION 0.5.3
 
 # x509 expects certs to be in this file only.
-RUN apk update && apk add openssl ca-certificates
+RUN apk update && apk add openssl ca-certificates && rm -rf /var/cache/apk/*
 
 # Download, unzip the given version of vault and set permissions
 RUN wget -qO /tmp/vault.zip https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
