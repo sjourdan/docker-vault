@@ -19,7 +19,7 @@ The automated latest build is always available at [sjourdan/vault](https://regis
 Start vault server in a **dev mode**:
 
 ```
-docker run -it \
+docker run -d \
       -p 8200:8200 \
       --hostname vault \
       --name vault sjourdan/vault
@@ -30,7 +30,7 @@ docker run -it \
 Start with a **demo Consul backend** using [demo.consul.io](https://demo.consul.io):
 
 ```
-docker run -it \
+docker run -d \
       -p 8200:8200 \
       --hostname vault \
       --name vault \
@@ -52,7 +52,7 @@ docker run -p 8400:8400 -p 8500:8500 -p 8600:53/udp --hostname consul --name con
 When your consul service is started and accessible via links or DNS as consul, you can just start vault server using the following command:
 
 ```
-docker run -it \
+docker run -d \
       -p 8200:8200 \
       --hostname vault \
       --name vault \
