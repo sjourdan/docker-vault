@@ -2,6 +2,13 @@
 
 [![Circle CI](https://circleci.com/gh/sjourdan/docker-vault.svg?style=shield)](https://circleci.com/gh/sjourdan/docker-vault)
 
+For the quickest setup possible
+
+1. Run vault.sh
+2. Download vault and run ./vault init
+
+Note: A directory called Vault will be created in your root directory
+
 This Docker Vault container is using [Alpine Linux](https://hub.docker.com/_/alpine/) minimal image and [Hashicorp's Vault](https://vaultproject.io/).
 
 Vault uses TCP/8200 by default, so we'll keep that. The demo configuration is listening on all interfaces (not just localhost), and using demo.consul.io as per the [getting started docs](https://vaultproject.io/intro/getting-started/deploy.html).
