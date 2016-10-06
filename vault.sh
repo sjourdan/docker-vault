@@ -9,5 +9,5 @@ docker run -d \
      --link consul:consul \
      --volume ~/Vault/config:/config \
      sjourdan/vault server -config=/config/consul.hcl
-export VAULT_ADDR='http://127.0.0.1:8200'
-echo "Now download Vault and run './vault init'" 
+export VAULT_ADDR="http://127.0.0.1:8200"
+echo "Now download Vault and run './vault init'"
