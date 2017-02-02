@@ -10,6 +10,9 @@ RUN apk update && apk add openssl ca-certificates && rm -rf /var/cache/apk/*
 RUN wget -qO /tmp/vault.zip https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
       unzip -d /bin /tmp/vault.zip && rm /tmp/vault.zip && chmod 755 /bin/vault
 
+RUN mkdir -p /config
+COPY config/*.hcl /config/
+
 EXPOSE 8200
 VOLUME "/config"
 
