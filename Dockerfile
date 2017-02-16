@@ -1,7 +1,7 @@
 FROM alpine:latest
 MAINTAINER Stephane Jourdan <fasten@fastmail.fm>
-ENV REFRESHED_AT 2016-09-14
-ENV VAULT_VERSION 0.6.1
+ENV REFRESHED_AT 2017-02-16
+ENV VAULT_VERSION 0.6.5
 
 # x509 expects certs to be in this file only.
 RUN apk update && apk add openssl ca-certificates && rm -rf /var/cache/apk/*
