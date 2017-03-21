@@ -1,6 +1,7 @@
 FROM alpine:3.5
 MAINTAINER Stephane Jourdan <fasten@fastmail.fm>
 ENV VAULT_VERSION 0.7.0
+LABEL name="vault"
 LABEL version=0.7.0
 LABEL maintainer="Stephane Jourdan <fasten@fastmail.fm>"
 
