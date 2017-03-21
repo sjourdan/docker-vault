@@ -74,7 +74,7 @@ And refer to [vault documentation](https://www.vaultproject.io/docs/index.html) 
 
 You can simply export the root token printed on vault server startup as `export VAULT_TOKEN=PASTE_YOUR_TOKEN_HERE`.
 
-To use a vault client from a container you can create a wrapper function like bellow:
+To use a vault client from a container you can create a wrapper function like below:
 
 ```
 vault () { docker run -it --rm -e VAULT_ADDR --entrypoint=/bin/sh sjourdan/vault -c "vault auth $VAULT_TOKEN &>/dev/null; vault $*" }
