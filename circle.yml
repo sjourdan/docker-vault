@@ -3,7 +3,10 @@ machine:
     - docker
 dependencies:
   override:
+    - docker info
     - make build
 test:
   override:
+    - docker run --rm -i sjourdan/hadolint < Dockerfile
+    - docker run --rm -v $PWD:/root/ projectatomic/dockerfile-lint dockerfile_lint
     - docker run sjourdan/vault version | grep "v$(cat Dockerfile | grep 'ENV VAULT_VERSION' | cut -f3 -d' ')"
